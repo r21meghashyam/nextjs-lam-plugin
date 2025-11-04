@@ -1,6 +1,6 @@
 {
     "name": "nextjs-lam-plugin",
-    "version": "1.2.8",
+    "version": "1.3.0",
     "description": "Next.js plugin for LAM (Localhost Apps Manager) - automatically registers development servers",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
