@@ -2,3 +2,6 @@ node_modules
 dist
 coverage
 *.log
+
+# Git hooks (uncomment if you want hooks to be local only)
+# .git/hooks/
