@@ -186,8 +186,19 @@ export function withLam(
 ): NextConfig {
     const lamPlugin = new NextJsLamPlugin(lamOptions);
 
+    // Get project name for allowed origins
+    const projectName = lamOptions.projectName || lamPlugin['getProjectName']();
+    const localDomain = projectName ? `${projectName}.local` : null;
+
     return {
         ...nextConfig,
+        // Configure allowed dev origins for cross-origin requests (Next.js 15+)
+        ...(localDomain && {
+            allowedDevOrigins: [
+                ...(nextConfig.allowedDevOrigins || []),
+                localDomain
+            ]
+        }),
         // Turbopack configuration (must be an object, not a function)
         turbopack: {
             ...nextConfig.turbopack,

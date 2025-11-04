@@ -7,6 +7,7 @@ A Next.js plugin that automatically integrates with LAM (Localhost Apps Manager)
 - 🚀 **Automatic Registration**: Automatically registers your Next.js dev server with LAM
 - 🔄 **Proxy Mode**: Uses LAM's proxy mode with WebSocket support for HMR
 - 🛡️ **HMR Support**: Configures Next.js to allow HMR from custom domains
+- 🌐 **Cross-Origin Support**: Automatically configures `allowedDevOrigins` for Next.js 15+
 - 🧹 **Auto Cleanup**: Automatically unregisters when the dev server stops
 - ⚙️ **Flexible Configuration**: Customizable LAM host, port, and proxy settings
 - 📝 **TypeScript Support**: Full TypeScript definitions and ES6 imports
@@ -147,6 +148,25 @@ When you start your dev server, you'll see:
 ### HMR Not Working
 
 Make sure you're using proxy mode (`useProxy: true`) and that your `.local` domain is properly configured in your hosts file.
+
+### Cross-Origin Request Warning (Next.js 15+)
+
+```
+⚠ Cross origin request detected from my-app.local to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+```
+
+**Solution**: The plugin automatically configures `allowedDevOrigins` for you. If you're still seeing this warning, make sure you're using the `withLam` helper function:
+
+```javascript
+const { withLam } = require('nextjs-lam-plugin');
+
+module.exports = withLam({
+  // Your Next.js config
+  reactStrictMode: true,
+});
+```
+
+The plugin automatically adds your `.local` domain to `allowedDevOrigins` to prevent cross-origin issues.
 
 ### Turbopack Error (Next.js 16)
 

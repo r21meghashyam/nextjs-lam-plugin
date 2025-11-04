@@ -55,5 +55,30 @@ describe('NextJsLamPlugin', () => {
             });
             expect(typeof config.headers).toBe('function');
         });
+
+        it('should configure allowedDevOrigins for cross-origin requests', () => {
+            const config = withLam({
+                reactStrictMode: true,
+            });
+            expect(config.allowedDevOrigins).toContain('nextjs-lam-plugin.local');
+        });
+
+        it('should merge with existing allowedDevOrigins', () => {
+            const config = withLam({
+                allowedDevOrigins: ['existing-domain.com'],
+                reactStrictMode: true,
+            });
+            expect(config.allowedDevOrigins).toContain('existing-domain.com');
+            expect(config.allowedDevOrigins).toContain('nextjs-lam-plugin.local');
+        });
+
+        it('should allow custom project name for allowedDevOrigins', () => {
+            const config = withLam({
+                reactStrictMode: true,
+            }, {
+                projectName: 'my-custom-app'
+            });
+            expect(config.allowedDevOrigins).toContain('my-custom-app.local');
+        });
     });
 });
